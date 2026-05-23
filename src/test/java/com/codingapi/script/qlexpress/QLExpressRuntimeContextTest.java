@@ -29,6 +29,7 @@ class QLExpressRuntimeContextTest {
     @Test
     void batchTest() {
         int count = 100;
+        execute();
         long t1 = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
             execute();
