@@ -5,8 +5,8 @@ import com.alibaba.qlexpress4.InitOptions;
 import com.alibaba.qlexpress4.QLOptions;
 import com.alibaba.qlexpress4.QLResult;
 import com.alibaba.qlexpress4.security.QLSecurityStrategy;
-import com.codingapi.script.request.BindObject;
-import com.codingapi.script.request.ScriptRequest;
+import com.codingapi.springboot.framework.script.request.GroovyMethodScript;
+import com.codingapi.springboot.framework.script.request.RuntimeBindObject;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -27,10 +27,10 @@ public class QLExpressRuntimeContext {
         this.runner = new Express4Runner(options);
     }
 
-    public <T> T execute(String method, String script, Class<T> returnType, List<BindObject> binds, Object... request) {
+    public <T> T execute(String method, String script, Class<T> returnType, List<RuntimeBindObject> binds, Object... request) {
         Map<String,Object> params = new HashMap<>();
         if (binds != null && !binds.isEmpty()) {
-            for (BindObject bindObject : binds) {
+            for (RuntimeBindObject bindObject : binds) {
                 params.put(bindObject.getKey(), bindObject.getObject());
             }
         }
@@ -51,12 +51,12 @@ public class QLExpressRuntimeContext {
         return (T)result.getResult();
     }
 
-    public <T> T run(String script, Class<T> returnType, List<BindObject> binds, Object... args) {
+    public <T> T run(String script, Class<T> returnType, List<RuntimeBindObject> binds, Object... args) {
         return execute("run", script, returnType, binds, args);
     }
 
 
-    public <T> T run(ScriptRequest<T> request){
+    public <T> T run(GroovyMethodScript<T> request){
         return execute("run",request.getScript(),request.getReturnType(),request.getBinds(),request.getParams());
     }
 

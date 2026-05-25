@@ -1,6 +1,6 @@
 package com.codingapi.script.qlexpress;
 
-import com.codingapi.script.request.ScriptRequest;
+import com.codingapi.springboot.framework.script.request.GroovyMethodScript;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,7 @@ class QLExpressRuntimeContextTest {
                     return request;
                 }
                 """;
-        ScriptRequest<Integer> request = new ScriptRequest<>(script, Integer.class, 100);
+        GroovyMethodScript<Integer> request = new GroovyMethodScript<>(script, Integer.class, 100);
         request.addBindObject("$request", request);
 
         long t1 = System.currentTimeMillis();
